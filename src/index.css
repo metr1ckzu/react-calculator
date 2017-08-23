@@ -1,52 +1,71 @@
-
-.component-app {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 600px;
-  width: 400px;
+.calculator {
+	width: 317px;
+	height: 420px;
+	margin: 0 auto;
+	margin-top: 100px;
+	-moz-box-shadow: 0 0 8px #000;
+	-webkit-box-shadow: 0 0 8px #000;
+	box-shadow: 0 0 8px #000;
+	background-color:#B9B9B9;
 }
 
-.component-button {
-  display: inline-flex;
-  width: 25%;
-  flex: 1 0 auto;
+.txtScreen {
+	float: left;
+	width: 315px;
+	height: 100px;
+	font-size: xx-large;
+	text-align: right;
+	border:none;
+	border-top: 10px solid #1BE1B0;
+	text-shadow: 1px 2px gray;
 }
 
-.component-button button {
-  background-color: #E0E0E0;
-  border: 0;
-  font-size: 42px;
-  margin: 0 1px 0 0;
-  flex: 1 0 auto;
-  padding: 0;
+.numericPad {
+	position: relative;
+	float: left;
+	background-color: #4E4E4E;
 }
 
-.component-panel {
-  background-color: #858694;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex: 1 0 auto;
-  min-height: 200px;
+.btnNum {
+	width: 77px;
+	height: 77px;
+	color: #ffffff;
+	background-color: #4E4E4E;
+	border: none;
+	font-size: large;
+	font-weight: bold;
+	cursor: pointer;
 }
 
-.component-panel > div {
-  width: 100%;
-  flex: 1 0 auto;
-  display: flex;
-  min-height: 50px;
+.btnNum:hover {
+	background-color: #464545;
 }
 
-.component-display {
-  text-align: right;
-  font-weight: 100px;
-  flex: 0 0 auto;
-  width: 100%;
+.funtionPad {
+	position: relative;
+	float: left;
+	background-color: #B9B9B9;
 }
 
-.component-display > div {
-  font-size: 50px;
-  padding: 8px 4px 0 4px;
-  min-height: 100px;
+.btnFuntionPad {
+	width: 60.4px;
+	height: 60.4px;
+	color: #ffffff;
+	background-color: #B9B9B9;
+	border: none;
+	font-size: large;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.btnFuntionPad:hover {
+	background-color: #ACABAB;
+}
+
+.extraFuntionPad {
+	width: 15.6px;
+	height: 308px;
+	background-color: #1BE1B0;
+	position: relative;
+	float: right;
 }

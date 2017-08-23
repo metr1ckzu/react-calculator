@@ -1,98 +1,134 @@
 import React from 'react';
 import './index.css'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      total: null,
-      next: null,
-      operation: null,
-    };
+class Calculator extends React.Component {
+  state = {
+    value: null,
+    displayValue: '0',
+    waitingForOperand: false,
+    operator: null,
   }
 
-  // handleClick = (buttonName) => {
-  //   this.setState(calculate(this.state, buttonName));
-  // }
-
-  render() {
-    return (
-      <div className="component-app">
-        <Display
-          value={this.state.next || this.state.total || '0'}
-        />
-        <ButtonPanel
-          clickHandler={this.handleClick}
-        />
-      </div>
-    );
-  }
-}
-
-class Display extends React.Component {
-  render() {
-    return (
-      <div className="component-display">
-        <div>
-          {this.props.value}
-        </div>
-      </div>
-    );
-  }
-}
-
-class ButtonPanel extends React.Component {
-  handleClick = (buttonName) => {
-    this.props.clickHandler(buttonName);
+  clearDisplay() {
+    this.setState({
+      displayValue: '0'
+    })
   }
 
-  render() {
-    return (
-      <div className="component-panel">
-        <div>
-          <Button name="7" clickHandler={this.handleClick} />
-          <Button name="8" clickHandler={this.handleClick} />
-          <Button name="9" clickHandler={this.handleClick} />
-          <Button name="/" clickHandler={this.handleClick} />
-        </div>
-        <div>
-          <Button name="4" clickHandler={this.handleClick} />
-          <Button name="5" clickHandler={this.handleClick} />
-          <Button name="6" clickHandler={this.handleClick} />
-          <Button name="x" clickHandler={this.handleClick} />
-        </div>
-        <div>
-          <Button name="1" clickHandler={this.handleClick} />
-          <Button name="2" clickHandler={this.handleClick} />
-          <Button name="3" clickHandler={this.handleClick} />
-          <Button name="-" clickHandler={this.handleClick} />
-        </div>
-        <div>
-          <Button name="DEL" clickHandler={this.handleClick} />
-          <Button name="0" clickHandler={this.handleClick} />
-          <Button name="=" clickHandler={this.handleClick} />
-          <Button name="+" clickHandler={this.handleClick} />
-        </div>
-      </div>
-    );
-  }
-}
+  inputDigit(digit) {
+    const { displayValue, waitingForOperand } = this.state
 
-class Button extends React.Component {
-  handleClick = () => {
-    this.props.clickHandler(this.props.name);
+    if (waitingForOperand) {
+      this.setState({
+        displayValue: String(digit),
+        waitingForOperand: false
+      })
+    } else {
+      this.setState({
+        displayValue: displayValue === '0' ? String(digit) : displayValue + digit
+      })
+    }
+  }
+
+  inputDot() {
+    const { displayValue, waitingForOperand } = this.state
+
+    if (waitingForOperand) {
+      this.setState({
+        displayValue: '0.',
+        waitingForOperand: false
+      })
+    } else if (displayValue.indexOf('.') === -1) {
+      this.setState({
+        displayValue: displayValue + '.'
+      })
+    }
+  }
+
+
+  performOperation(nextOperator) {
+    const  { displayValue , operator, value } = this.state
+    const inputValue = parseFloat(displayValue)
+
+    const operations = {
+      '/': (prevValue, nextValue) => prevValue / nextValue,
+      '*': (prevValue, nextValue) => prevValue * nextValue,
+      '+': (prevValue, nextValue) => prevValue + nextValue,
+      '-': (prevValue, nextValue) => prevValue - nextValue,
+      '=': (prevValue, nextValue) => nextValue
+    }
+
+    if (value == null) {
+      this.setState({
+        value: inputValue
+      })
+    } else if (operator) {
+      const currentValue = value || 0
+      const computedValue = operations[operator](currentValue, inputValue)
+
+      this.setState({
+        value: computedValue,
+        displayValue: String(computedValue)
+      })
+    }
+
+    this.setState({
+      waitingForOperand: true,
+      operator: nextOperator
+    })
+
   }
 
   render() {
-    let className = "component-button";
+    const { displayValue} = this.state
 
     return (
-      <div className={className}>
-        <button onClick={this.handleClick}>
-          {this.props.name}
-        </button>
+      <div className="calculator">
+        <div className="txtScreen">{displayValue}</div>
+      	<div className="numericPad">
+      		<div className="rowsNumPad">
+            <button className="btnNum" onClick={() => this.inputDigit(7)}>7</button>
+            <button className="btnNum" onClick={() => this.inputDigit(8)}>8</button>
+            <button className="btnNum" onClick={() => this.inputDigit(9)}>9</button>
+      		</div>
+      		<div className="rowsNumPad">
+            <button className="btnNum" onClick={() => this.inputDigit(4)}>4</button>
+            <button className="btnNum" onClick={() => this.inputDigit(5)}>5</button>
+            <button className="btnNum" onClick={() => this.inputDigit(6)}>6</button>
+      		</div>
+      		<div className="rowsNumPad">
+            <button className="btnNum" onClick={() => this.inputDigit(1)}>1</button>
+            <button className="btnNum" onClick={() => this.inputDigit(2)}>2</button>
+            <button className="btnNum" onClick={() => this.inputDigit(3)}>3</button>
+      		</div>
+      		<div className="rowsNumPad">
+            <button className="btnNum" onClick={() => this.inputDot()}>.</button>
+            <button className="btnNum" onClick={() => this.inputDigit(0)}>0</button>
+            <button className="btnNum" onClick={() => this.performOperation('=')}>=</button>
+      		</div>
+      	</div>
+      	<div className="funtionPad">
+          <div className="rowsFuntionPad">
+            <button className="btnFuntionPad" onClick={() => this.clearDisplay()}>DEL</button>
+          </div>
+          <div className="rowsFuntionPad">
+            <button className="btnFuntionPad" onClick={() => this.performOperation('/')}>÷</button>
+          </div>
+          <div className="rowsFuntionPad">
+            <button className="btnFuntionPad" onClick={() => this.performOperation('*')}>x</button>
+          </div>
+          <div className="rowsFuntionPad">
+            <button className="btnFuntionPad" onClick={() => this.performOperation('-')}>-</button>
+          </div>
+          <div className="rowsFuntionPad">
+            <button className="btnFuntionPad" onClick={() => this.performOperation('+')}>+</button>
+          </div>
+      	</div>
+        <div className="extraFuntionPad"></div>
       </div>
-    );
+
+    )
   }
 }
-export default App
+
+export default Calculator
