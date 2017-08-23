@@ -1,0 +1,52 @@
+
+.component-app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 600px;
+  width: 400px;
+}
+
+.component-button {
+  display: inline-flex;
+  width: 25%;
+  flex: 1 0 auto;
+}
+
+.component-button button {
+  background-color: #E0E0E0;
+  border: 0;
+  font-size: 42px;
+  margin: 0 1px 0 0;
+  flex: 1 0 auto;
+  padding: 0;
+}
+
+.component-panel {
+  background-color: #858694;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 1 0 auto;
+  min-height: 200px;
+}
+
+.component-panel > div {
+  width: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  min-height: 50px;
+}
+
+.component-display {
+  text-align: right;
+  font-weight: 100px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.component-display > div {
+  font-size: 50px;
+  padding: 8px 4px 0 4px;
+  min-height: 100px;
+}
