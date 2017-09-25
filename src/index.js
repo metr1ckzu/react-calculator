@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Calculator from './App';
+//import Calculator from './App';
+import CalculatorES from './refactoredApp'
 
 
 ReactDOM.render(
-  <Calculator />,
+  <CalculatorES />,
 document.getElementById('root')
 );
