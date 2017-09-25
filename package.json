@@ -29,7 +29,8 @@
     "regenerator-runtime": "^0.11.0"
   },
   "jest": {
-    "transform": {},
+    "transform": { "^.+\\.(js|jsx)$":
+      "<rootDir>/node_modules/babel-jest" },
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"
     ],
